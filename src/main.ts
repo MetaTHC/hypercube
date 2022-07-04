@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
-require('dotenv').config({ path: '.env' });
+require('dotenv').config({ path: './env/.env' });
 import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { setupSwagger } from './config/swagger/swagger.controller';
