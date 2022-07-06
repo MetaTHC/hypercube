@@ -1,5 +1,5 @@
 <p align="center" width="100%">
-    <img width="25%" src="www/public/images/logo/logo.png"> 
+    <img width="25%" src="./www/public/images/logo/logo.png"> 
 </p>
 
 <h1 align="center" width="100%">Hyper² Blockchain Network Project</h1>
