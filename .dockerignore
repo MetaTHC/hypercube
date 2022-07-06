@@ -1,0 +1,11 @@
+# DOCKER IGNORE FILES
+Dockerfile
+.dockerignore
+node_modules
+dist
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen

@@ -22,7 +22,11 @@
     "--+ PRISMA SETTINGS +--": "",
     "prisma:account:pull": "cd ./prisma/account && npx prisma db pull",
     "prisma:account:generate": "cd ./prisma/account && npx prisma generate",
-    "prisma:account:migrate": "cd ./prisma/account && npx prisma migrate dev --name init"
+    "prisma:account:migrate": "cd ./prisma/account && npx prisma migrate dev --name init",
+    "---+ DOCKER SETTINGS +---": "",
+    "docker:build": "docker build -t hypercube .",
+    "docker:push": "docker push hypercube",
+    "docker:run": "docker run -p 6060:6060 hypercube"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.6.7",

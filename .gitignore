@@ -1,6 +1,5 @@
 # PROJECT DEVELOPMENT
 /prisma/account/migrations
-/env
 /www
 
 # compiled output
