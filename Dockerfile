@@ -1,28 +1,21 @@
-####################################
-# LOCAL DEVELOPMENT BUILD
-####################################
-FROM node:16.14.2-alpine as development
+# Base image
+FROM node:16.14.2-alpine
+
+# Create app directory
 WORKDIR /v1/api
-COPY --chown=node:node package*.json ./
-RUN npm ci
-COPY --chown=node:node . .
-USER node
-####################################
-# PRODUCTION BUILD
-####################################
-FROM node:16.14.2-alpine as build
-WORKDIR /v1/api
-COPY --chown=node:node package*.json ./
-COPY --chown=node:node --from=development /v1/api/node_modules ./node_modules
-COPY --chown=node:node . .
+
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Bundle app source
+COPY . .
+
+# Creates a "dist" folder with the production build
 RUN npm run build
-ENV NODE_ENV production
-RUN npm ci --only=production && npm cache clean --force
-USER node
-####################################
-# PRODUCTION
-####################################
-FROM node:16.14.2-alpine as production
-COPY --chown=node:node --from=build /v1/api/node_modules ./node_modules
-COPY --chown=node:node --from=build /v1/api/dist ./dist
+
+# Start the server using the production build
 CMD [ "node", "dist/main.js" ]
+
