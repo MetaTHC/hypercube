@@ -50,10 +50,12 @@
           ]
         },
         "roles": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/user_roles"
-          }
+          "type": "string",
+          "default": "USER",
+          "enum": [
+            "USER",
+            "ADMIN"
+          ]
         },
         "verified": {
           "type": "boolean",
@@ -133,6 +135,22 @@
           "default": 0
         },
         "supporters": {
+          "type": "integer",
+          "default": 0
+        },
+        "posts": {
+          "type": "integer",
+          "default": 0
+        },
+        "comments": {
+          "type": "integer",
+          "default": 0
+        },
+        "likes": {
+          "type": "integer",
+          "default": 0
+        },
+        "donations": {
           "type": "integer",
           "default": 0
         },
@@ -348,20 +366,6 @@
         }
       }
     },
-    "user_roles": {
-      "type": "object",
-      "properties": {
-        "user": {
-          "$ref": "#/definitions/user"
-        },
-        "roles": {
-          "type": [
-            "string",
-            "null"
-          ]
-        }
-      }
-    },
     "user_connect": {
       "type": "object",
       "properties": {
@@ -444,9 +448,6 @@
     },
     "user_subscriptions": {
       "$ref": "#/definitions/user_subscriptions"
-    },
-    "user_roles": {
-      "$ref": "#/definitions/user_roles"
     },
     "user_connect": {
       "$ref": "#/definitions/user_connect"

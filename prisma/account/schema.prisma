@@ -8,15 +8,15 @@ datasource db {
 }
 generator dbml {
   provider = "prisma-dbml-generator"
-  output   = "./dbml"
+  output   = "./src/dbml"
 }
 generator jsonSchema {
   provider = "prisma-json-schema-generator"
-  output = "./jsonSchema"
+  output = "./src/jsonSchema"
 }
 generator nestjsDto {
   provider                        = "prisma-generator-nestjs-dto"
-  output                          = "./NestDto"
+  output                          = "./src/NestDto"
   outputToNestJsResourceStructure = "false"
   exportRelationModifierClasses   = "true"
   reExport                        = "false"
@@ -36,7 +36,7 @@ model user {
   profile                   user_profile?
   billing                   user_billing?
   address                   user_address?
-  roles                     user_roles[]
+  role                      user_roles          @default(USER)
   verified                  Boolean             @default(false)
   public_key                String?
   wallet_address            String?
@@ -109,11 +109,6 @@ model user_subscriptions {
     vlogger                 Boolean             @default(false)
     partner                 Boolean             @default(false)
 }
-model user_roles {
-    user                    user                @relation(fields: [userId], references: [id])
-    userId                  Int                 @unique
-    roles                   String?
-}
 model user_connect {
     user_profile             user_profile        @relation(fields: [user_profileId], references: [id])
     user_profileId           Int                 @unique
@@ -126,4 +121,8 @@ model user_connect {
     tiktok                   String?
     redit                    String?
     linkedin                 String?
+}
+enum user_roles {
+    USER
+    ADMIN
 }

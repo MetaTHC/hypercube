@@ -1,8 +1,8 @@
 
+import {user_roles} from '@prisma/client'
 import {UserProfile} from './userProfile.entity'
 import {UserBilling} from './userBilling.entity'
 import {UserAddress} from './userAddress.entity'
-import {UserRoles} from './userRoles.entity'
 
 
 export class User {
@@ -13,7 +13,7 @@ password: string ;
 profile?: UserProfile  | null;
 billing?: UserBilling  | null;
 address?: UserAddress  | null;
-roles?: UserRoles[] ;
+roles: user_roles ;
 verified: boolean ;
 public_key: string  | null;
 wallet_address: string  | null;

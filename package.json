@@ -5,6 +5,9 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "prisma": {
+    "seed": "ts-node prisma/account/seed.ts"
+  },
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -23,6 +26,7 @@
     "prisma:account:pull": "cd prisma/account && npx prisma db pull",
     "prisma:account:generate": "cd prisma/account && npx prisma generate",
     "prisma:account:migrate": "cd prisma/account && npx prisma migrate dev --name init",
+    "prisma:account:seed": "npx prisma db seed",
     "---+ DOCKER SETTINGS +---": "",
     "docker:build": "docker build -t hypercube .",
     "docker:push": "docker push hypercube",

@@ -10,7 +10,7 @@ Table user {
   profile user_profile
   billing user_billing
   address user_address
-  roles user_roles [not null]
+  roles user_roles [not null, default: 'USER']
   verified Boolean [not null, default: false]
   public_key String
   wallet_address String
@@ -32,6 +32,10 @@ Table user_profile {
   following Int [not null, default: 0]
   subscribers Int [not null, default: 0]
   supporters Int [not null, default: 0]
+  posts Int [not null, default: 0]
+  comments Int [not null, default: 0]
+  likes Int [not null, default: 0]
+  donations Int [not null, default: 0]
   connections user_connect [not null]
   blog Boolean [not null, default: false]
   vendor Boolean [not null, default: false]
@@ -85,12 +89,6 @@ Table user_subscriptions {
   partner Boolean [not null, default: false]
 }
 
-Table user_roles {
-  user user [not null]
-  userId Int [unique, not null]
-  roles String
-}
-
 Table user_connect {
   user_profile user_profile [not null]
   user_profileId Int [unique, not null]
@@ -105,6 +103,11 @@ Table user_connect {
   linkedin String
 }
 
+Enum user_roles {
+  USER
+  ADMIN
+}
+
 Ref: user_profile.userId - user.id
 
 Ref: user_billing.userId - user.id
@@ -114,7 +117,5 @@ Ref: user_address.userId - user.id
 Ref: user_invoice.user_billingId - user_billing.id
 
 Ref: user_subscriptions.user_billingId - user_billing.id
-
-Ref: user_roles.userId > user.id
 
 Ref: user_connect.user_profileId > user_profile.id
