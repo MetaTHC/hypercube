@@ -29,57 +29,101 @@ generator nestjsDto {
 }
 // ##### DATABASE MODELS
 model user {
-  id            Int                 @id @default(autoincrement())
-  username      String?
-  email         String              @unique
-  password      String
-  profile       user_profile?
-  billing       user_billing?
-  address       user_address?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id                        Int                 @id @default(autoincrement())
+  username                  String?
+  email                     String              @unique
+  password                  String
+  profile                   user_profile?
+  billing                   user_billing?
+  address                   user_address?
+  roles                     user_roles[]
+  verified                  Boolean             @default(false)
+  public_key                String?
+  wallet_address            String?
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
 }
 model user_profile {
-  id            Int                 @id @default(autoincrement())
-  user          user                @relation(fields: [userId], references: [id])
-  userId        Int                 @unique
-  firstName     String?
-  lastName      String?
-  avatarImg     String?
-  coverImg      String?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id                        Int                 @id @default(autoincrement())
+  user                      user                @relation(fields: [userId], references: [id])
+  userId                    Int                 @unique
+  firstName                 String?
+  lastName                  String?
+  avatarImg                 String?
+  coverImg                  String?
+  photos                    Bytes
+  videos                    Bytes
+  followers                 Int                 @default(0)
+  following                 Int                 @default(0)
+  subscribers               Int                 @default(0)
+  supporters                Int                 @default(0)
+  posts                     Int                 @default(0)
+  comments                  Int                 @default(0)
+  likes                     Int                 @default(0)
+  donations                 Int                 @default(0)
+  connections               user_connect[]
+  blog                      Boolean             @default(false)
+  vendor                    Boolean             @default(false)
+  creator                   Boolean             @default(false)
+  public_profile            Boolean             @default(true)
 }
 model user_billing {
-  id            Int                 @id @default(autoincrement())
-  user          user                @relation(fields: [userId], references: [id])
-  userId        Int                 @unique
-  accountName   String?
-  accountNumber String?
-  bankName      String?
-  sortCode      String?
-  invoice       user_invoice?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id                        Int                 @id @default(autoincrement())
+  user                      user                @relation(fields: [userId], references: [id])
+  userId                    Int                 @unique
+  accountName               String?
+  accountNumber             String?
+  bankName                  String?
+  sortCode                  String?
+  invoice                   user_invoice?
+  subscription              user_subscriptions?
 }
 model user_address {
-    id            Int                 @id @default(autoincrement())
-    user          user                @relation(fields: [userId], references: [id])
-    userId        Int                 @unique
-    address       String?
-    city          String?
-    state         String?
-    country       String?
-    zip           String?
-    createdAt     DateTime            @default(now())
-    updatedAt     DateTime            @updatedAt
+    user                    user                @relation(fields: [userId], references: [id])
+    userId                  Int                 @unique
+    address                 String?
+    city                    String?
+    state                   String?
+    country                 String?
+    zip                     String?
 }
 model user_invoice {
-    id                    Int               @id @default(autoincrement())
-    billing               user_billing      @relation(fields: [user_billingId], references: [id])
-    user_billingId        Int               @unique
-    invoiceNumber         String?
-    invoiceDate           DateTime?
-    createdAt             DateTime          @default(now())
-    updatedAt             DateTime          @updatedAt
+    billing                 user_billing        @relation(fields: [user_billingId], references: [id])
+    user_billingId          Int                 @unique
+    invoiceNumber           String?
+    invoiceDate             DateTime?
+    createdAt               DateTime            @default(now())
+    updatedAt               DateTime            @updatedAt
+}
+model user_subscriptions {
+    billing                 user_billing        @relation(fields: [user_billingId], references: [id])
+    user_billingId          Int                 @unique
+    creators                Json
+    bloggers                Json
+    vloggers                Json
+    vip                     Boolean             @default(false)
+    social                  Boolean             @default(true)
+    vendor                  Boolean             @default(false)
+    creator                 Boolean             @default(false)
+    blogger                 Boolean             @default(false)
+    vlogger                 Boolean             @default(false)
+    partner                 Boolean             @default(false)
+}
+model user_roles {
+    user                    user                @relation(fields: [userId], references: [id])
+    userId                  Int                 @unique
+    roles                   String?
+}
+model user_connect {
+    user_profile             user_profile        @relation(fields: [user_profileId], references: [id])
+    user_profileId           Int                 @unique
+    twitch                   String?
+    trovo                    String?
+    youtube                  String?
+    instagram                String?
+    twitter                  String?
+    facebook                 String?
+    tiktok                   String?
+    redit                    String?
+    linkedin                 String?
 }

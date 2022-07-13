@@ -1,0 +1,120 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table user {
+  id Int [pk, increment]
+  username String
+  email String [unique, not null]
+  password String [not null]
+  profile user_profile
+  billing user_billing
+  address user_address
+  roles user_roles [not null]
+  verified Boolean [not null, default: false]
+  public_key String
+  wallet_address String
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table user_profile {
+  id Int [pk, increment]
+  user user [not null]
+  userId Int [unique, not null]
+  firstName String
+  lastName String
+  avatarImg String
+  coverImg String
+  photos Bytes [not null]
+  videos Bytes [not null]
+  followers Int [not null, default: 0]
+  following Int [not null, default: 0]
+  subscribers Int [not null, default: 0]
+  supporters Int [not null, default: 0]
+  connections user_connect [not null]
+  blog Boolean [not null, default: false]
+  vendor Boolean [not null, default: false]
+  creator Boolean [not null, default: false]
+  public_profile Boolean [not null, default: true]
+}
+
+Table user_billing {
+  id Int [pk, increment]
+  user user [not null]
+  userId Int [unique, not null]
+  accountName String
+  accountNumber String
+  bankName String
+  sortCode String
+  invoice user_invoice
+  subscription user_subscriptions
+}
+
+Table user_address {
+  user user [not null]
+  userId Int [unique, not null]
+  address String
+  city String
+  state String
+  country String
+  zip String
+}
+
+Table user_invoice {
+  billing user_billing [not null]
+  user_billingId Int [unique, not null]
+  invoiceNumber String
+  invoiceDate DateTime
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table user_subscriptions {
+  billing user_billing [not null]
+  user_billingId Int [unique, not null]
+  creators Json [not null]
+  bloggers Json [not null]
+  vloggers Json [not null]
+  vip Boolean [not null, default: false]
+  social Boolean [not null, default: true]
+  vendor Boolean [not null, default: false]
+  creator Boolean [not null, default: false]
+  blogger Boolean [not null, default: false]
+  vlogger Boolean [not null, default: false]
+  partner Boolean [not null, default: false]
+}
+
+Table user_roles {
+  user user [not null]
+  userId Int [unique, not null]
+  roles String
+}
+
+Table user_connect {
+  user_profile user_profile [not null]
+  user_profileId Int [unique, not null]
+  twitch String
+  trovo String
+  youtube String
+  instagram String
+  twitter String
+  facebook String
+  tiktok String
+  redit String
+  linkedin String
+}
+
+Ref: user_profile.userId - user.id
+
+Ref: user_billing.userId - user.id
+
+Ref: user_address.userId - user.id
+
+Ref: user_invoice.user_billingId - user_billing.id
+
+Ref: user_subscriptions.user_billingId - user_billing.id
+
+Ref: user_roles.userId > user.id
+
+Ref: user_connect.user_profileId > user_profile.id
