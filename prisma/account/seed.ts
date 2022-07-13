@@ -9,6 +9,9 @@ async function main() {
       email: 'admin@admin.com',
       username: 'admin',
       password: 'admin',
+      verified: true,
+      public_key: 'admin.metacubic.org',
+      wallet_address: 'admin.wallet.metacubic.org',
     },
   });
 
@@ -19,6 +22,9 @@ async function main() {
       email: 'webmaster@webmaster.com',
       username: 'webmaster',
       password: 'webmaster',
+      verified: true,
+      public_key: 'webmaster.metacubic.org',
+      wallet_address: 'webmaster.wallet.metacubic.org',
     },
   });
   console.log({ admin, webmaster });
